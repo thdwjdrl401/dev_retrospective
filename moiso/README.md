@@ -16,7 +16,7 @@
 
 ## 내가 풀었던 문제들
 
-### 1. JPA dirty checking이 암호화를 역행했다
+### 1. JPA dirty checking으로 복호화한 값이 DB에 다시 저장됐다
 
 개인정보(주민번호, 전화번호)를 조회할 때 DB에서 꺼낸 뒤 복호화해서 반환했다. 처음엔 그냥 `entity.setPhone(decrypt(entity.getPhone()))` 후 반환했는데, 운영 중 개인정보가 평문으로 DB에 덮어써지는 버그가 발생했다.
 
