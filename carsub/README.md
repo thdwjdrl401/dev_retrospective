@@ -86,6 +86,7 @@ flowchart TB
   subgraph F ["프레임 기반 — 해결"]
     F1["addPostFrameCallback"] --> F2["프레임 렌더 직후 stop"] --> F3["기기 무관 일정"]
   end
+  T3 -. 접근 변경 .-> F1
 ```
 
 </details>

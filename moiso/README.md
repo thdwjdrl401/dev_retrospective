@@ -32,6 +32,7 @@ flowchart TB
   subgraph right ["안전한 순서"]
     R1["암호화 → save"] --> R2["flush"] --> R3["detach"] --> R4["복호화 → 반환"]
   end
+  W3 -. 순서 교정 .-> R1
 ```
 
 ### 첨부파일 Base64→AES 점진 전환 (매직패킷 포맷 판별)
@@ -74,6 +75,7 @@ flowchart TB
   subgraph after ["이후 — 일괄 로드 + 인덱싱"]
     B1["1회 일괄 로드"] --> B2["3중 Map 인덱싱"] --> B3["루프 내 O(1)"]
   end
+  Q3 -. 재설계 .-> B1
 ```
 
 ### 전체 엔드포인트 역할 기반 인가 일괄 적용
