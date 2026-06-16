@@ -8,20 +8,9 @@
 |---|---|
 | 기간 | 2024.03 ~ 2025.08 |
 | 역할 | 초기 팀 구축 → 이후 단독 고도화·운영 (약 1년) |
-| 스택 | Java 11, Spring Boot 2.6, JPA · Flutter/Dart · MySQL · GitLab CI/CD |
+| 스택 | Java 11, Spring Boot 2.6, JPA · Flutter/Dart · MySQL · GitLab |
 | 커밋 | 503 (본인 기준, 3개 레포 합산) |
 | 규모 | 약 20만 사용자 · 복지 서비스 8종 이상 |
-
-```mermaid
-flowchart LR
-  U["도민 약 20만"] --> APP["Flutter 앱<br/>gb_mydata"]
-  ADM["담당 공무원"] --> WEB["관리자 웹<br/>gb_mydata_web<br/>(자체 REST API)"]
-  APP --> API["API 서버<br/>gb-mydata-api"]
-  API --> DB[("MySQL<br/>gb_mydata")]
-  WEB --> DB
-  API <--> MYD["공공 마이데이터"]
-  API <--> HRM["외부 연계 시스템"]
-```
 
 경상북도청 발주 복지 통합 플랫폼입니다. 팀이 구축한 시스템을 이어받아 앱·API·관리자 웹 세 레포를 모두 맡았고, 개인정보 암호화·인증/인가·조회 성능·외부 데이터 검증·앱 클라이언트·도메인 정합성까지 다뤘습니다. 아래는 **대표 작업 5개**이고, 나머지는 영역별로 접어 뒀습니다.
 
@@ -33,7 +22,7 @@ flowchart LR
 
 조회 시 DB에서 꺼낸 값을 복호화해 반환하는 구조에서, 운영 중 두 버그가 났습니다. 아무 UPDATE도 없는데 평문이 DB에 덮어써지는 것, 그리고 이미 복호화된 값을 한 번 더 복호화해 터지는 것.
 
-원인은 같았습니다. `save()`가 돌려준 엔티티는 영속성 컨텍스트가 관리하는 managed 상태라, 거기에 복호화 값을 `set`하면 커밋 시점에 dirty checking이 평문을 write-back합니다. **"복호화는 읽기"라는 전제가 틀렸습니다.** 정답은 순서였습니다 — `암호화 → save → flush → detach → 복호화 → 반환`. detach를 save 직후로 당기고(412d671c), 다음 날 flush·`@Transactional`을 보강(0755bfd8)했습니다. 근본적으론 엔티티 대신 DTO로 반환했어야 합니다.
+원인은 같았습니다. `save()`가 돌려준 엔티티는 영속성 컨텍스트가 관리하는 managed 상태라, 거기에 복호화 값을 `set`하면 커밋 시점에 dirty checking이 평문을 write-back합니다. **"복호화는 읽기"라는 전제가 틀렸습니다.** 정답은 순서였습니다 — `암호화 → save → flush → detach → 복호화 → 반환`. detach를 save 직후로 당기고, 다음 날 flush·`@Transactional`을 보강했습니다. 근본적으론 엔티티 대신 DTO로 반환했어야 합니다.
 
 ```mermaid
 flowchart TB

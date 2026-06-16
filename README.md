@@ -3,7 +3,7 @@
 > 약 20만 사용자 복지 플랫폼을 포함해 공공·실서비스의 앱·API·관리자 웹을 맡아 운영·고도화해 온 **백엔드 중심 개발자**입니다.
 > 보안·성능·데이터 정합성 문제를 "왜 그렇게 풀었는지"까지 코드로 남깁니다.
 
-**기술 스택** · Java · Spring Boot · JPA · Flutter/Dart · MySQL · GitLab CI/CD
+**기술 스택** · Java · Spring Boot · JPA · Flutter/Dart · MySQL · GitLab
 
 ---
 
@@ -12,11 +12,11 @@
 백엔드에서 푼 핵심 문제를 역량 단위로 모았습니다. 상세·도식은 각 프로젝트 회고에.
 
 - **영속성·트랜잭션** — 복호화 값이 JPA dirty checking으로 평문 재저장되던 버그를 `flush → detach` 순서로 해결 → [moiso](./moiso/)
-- **암호화·민감정보** — 무중단 암호화 전환(매직패킷 점진 마이그레이션) · 로그인 비밀번호 RSA(Spring Security 필터 앞단 전처리) · 주민번호 메모리 잔존을 Frida로 재현해 입력~전송 구조 재설계 → [moiso](./moiso/)
+- **암호화·민감정보** — 첨부 Base64→AES 점진 전환(매직패킷 포맷 판별) · 로그인 비밀번호 RSA(Spring Security 필터 앞단 전처리) · 주민번호 메모리 잔존을 Frida로 재현해 입력~전송 구조 재설계 → [moiso](./moiso/)
 - **인증·인가** — "인증은 있는데 인가가 없던" 전체 엔드포인트 일괄 인가 · 첨부 선언적 RBAC(target→role) · 인증 없던 앱 API에 JWT 체계 도입 → [moiso](./moiso/) · [carsub](./carsub/)
 - **성능·확장성** — N+1을 일괄 로드 + 3중 `Map` 인덱싱으로 (10초+ → 0.5초) · 수만 건 엑셀 SXSSF 스트리밍 + 진행률 polling → [moiso](./moiso/)
 - **외부 시스템 연계** — 외부 스펙과 내부 도메인 사이에 변환 계층(뷰 테이블 + 코드 매핑, 변동값은 DB로 관리) → [duksung_rnd](./duksung_rnd/)
-- **운영 자동화·인프라** — 포트 개방 없이 SSH 원격 백업(계정 권한 분리) + 상태 전환 시점만 알림을 자발적 도구로 → [asnet_dashboard](./asnet_dashboard/)
+- **운영 자동화·인프라** — 포트 개방 없이 SSH 원격 백업 + 상태 전환 시점만 알림을 자발적 도구로 → [asnet_dashboard](./asnet_dashboard/)
 
 ---
 

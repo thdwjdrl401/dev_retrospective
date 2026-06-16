@@ -8,7 +8,7 @@
 |---|---|
 | 기간 | 2024.03 ~ 2025.08 |
 | 역할 | 팀(3인) — 프론트엔드 구현·백엔드 개발, 점차 메인 담당 |
-| 스택 | Java · Spring Boot · Spring Security · JPA · Thymeleaf · MySQL · GitLab CI/CD |
+| 스택 | Java · Spring Boot · Spring Security · JPA · Thymeleaf · MySQL · GitLab |
 | 커밋 | 103 (본인 기준) |
 | 도메인 | 산학협력 실적, 사업공모 신청·심사, 가족기업, 공용장비 신청, 재직자 교육, QR 인증, 권한 관리 |
 
